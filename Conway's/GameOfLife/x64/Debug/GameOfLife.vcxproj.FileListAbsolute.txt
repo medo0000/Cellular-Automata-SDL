@@ -1,0 +1,1 @@
+C:\Users\aelfi\Desktop\C++\Conway's\GameOfLife\x64\Debug\GameOfLife.exe
