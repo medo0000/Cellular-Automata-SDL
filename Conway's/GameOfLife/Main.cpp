@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include <SDL.h>
+#include <string>
+#include <vector>
 
+using namespace std;
 const int GRID_WIDTH = 50;
 const int GRID_HEIGHT = 50;
 const int CELL_SIZE = 10;
+
+
 // Cell class
 class Cell
 {
@@ -103,40 +108,45 @@ public:
 	}
 	void Update()
 	{
-		// Apply game rules and update cell states
-		Grid updatedGrid = *this; // Create a copy of the current grid
+		//printf("%s", "update func");
+		Grid nextGrid; // Create a new grid for the next iteration
 
-		// Iterate over each cell in the grid
 		for (int x = 0; x < GRID_WIDTH; ++x)
 		{
 			for (int y = 0; y < GRID_HEIGHT; ++y)
 			{
-				// Count the number of alive neighbors
 				int aliveNeighbors = CountAliveNeighbors(x, y);
+				bool nextState = false;
 
-				// Apply the rules of Conway's Game of Life
+				// Apply the rules of the game
 				if (IsCellAlive(x, y))
 				{
-					// Cell is alive
-					if (aliveNeighbors < 2 || aliveNeighbors > 3)
+					if (aliveNeighbors == 2 || aliveNeighbors == 3)
 					{
-						// Cell dies due to underpopulation or overpopulation
-						updatedGrid.SetCellState(x, y, false);
+						nextState = true; // Cell stays alive
 					}
 				}
 				else
 				{
-					// Cell is dead
 					if (aliveNeighbors == 3)
 					{
-						// Cell becomes alive due to reproduction
-						updatedGrid.SetCellState(x, y, true);
+						nextState = true; // Cell becomes alive
 					}
 				}
+
+				// Set the state of the cell in the new grid
+				nextGrid.SetCellState(x, y, nextState);
 			}
 		}
 
-		*this = updatedGrid; // Replace the original grid with the updated grid
+		// Update the state of the current grid cells without replacing the grid object
+		for (int x = 0; x < GRID_WIDTH; ++x)
+		{
+			for (int y = 0; y < GRID_HEIGHT; ++y)
+			{
+				SetCellState(x, y, nextGrid.IsCellAlive(x, y));
+			}
+		}
 	}
 private:
 	Cell m_cells[GRID_WIDTH][GRID_HEIGHT];
@@ -214,11 +224,13 @@ int main(int argc, char* args[])
 	// Create a grid
 	Grid grid;
 
+
 	// Main game loop
 	bool running = true;
 	int iterationCount = 0;
 	while (running)
 	{
+		//printf("%d", iterationCount);
 		// Handle events
 		SDL_Event event;
 		int mouseX = 0;
@@ -270,6 +282,7 @@ int main(int argc, char* args[])
 			}
 		}
 
+
 		// Clear the renderer
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
@@ -282,8 +295,6 @@ int main(int argc, char* args[])
 		// Update the screen
 		SDL_RenderPresent(renderer);
 
-		// Update the grid
-		grid.Update();
 	}
 
 	// Clean up and exit

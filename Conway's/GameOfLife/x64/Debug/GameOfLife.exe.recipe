@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\aelfi\Desktop\C++\Conway's\GameOfLife\x64\Debug\GameOfLife.exe</FullPath>
+      <FullPath>C:\Users\aelfi\Desktop\github projects\Cellular-Automata-SDL\Conway's\GameOfLife\x64\Debug\GameOfLife.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -1,1 +1,2 @@
 C:\Users\aelfi\Desktop\C++\Conway's\GameOfLife\x64\Debug\GameOfLife.exe
+C:\Users\aelfi\Desktop\github projects\Cellular-Automata-SDL\Conway's\GameOfLife\x64\Debug\GameOfLife.exe
